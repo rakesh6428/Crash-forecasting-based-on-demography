@@ -18,6 +18,7 @@ class DataVisualisation:
         plt.title("Accidents Per Year", fontsize=20, fontweight="bold")
         plt.xlabel("\nYear", fontsize=15, fontweight="bold")
         plt.ylabel("\nNumber of Accidents", fontsize=15, fontweight="bold")
+        plt.savefig('Views/accidents.png')
         plt.show()
 
     def speed_serious_view(self,severe_class,less_severe_class):
@@ -33,6 +34,7 @@ class DataVisualisation:
         ax2.set_xlabel('Severe Accidents', fontsize=12)
         ax1.set_ylabel('Number of Accidents', fontsize=12)
         ax2.set_ylabel('Number of Accidents', fontsize=12)
+        plt.savefig('Views/speed.png')
         fig.show()
 
     def junction_accidents_view(self,sever_class,less_severe_class):
@@ -49,6 +51,7 @@ class DataVisualisation:
         ax2.set_xlabel('Severe Accidents', fontsize=12)
         ax1.set_ylabel('Number of Accidents', fontsize=12)
         ax2.set_ylabel('Number of Accidents', fontsize=12)
+        plt.savefig('Views/junction.png')
         fig.show()
 
     def driver_gender_accidents_view(self, severe_class, less_severe_class):
@@ -64,6 +67,7 @@ class DataVisualisation:
         ax2.set_xlabel('Severe Accidents', fontsize=12)
         ax1.set_ylabel('Number of Accidents', fontsize=12)
         ax2.set_ylabel('Number of Accidents', fontsize=12)
+        plt.savefig('Views/gender.png')
         fig.show()
 
     def driver_age_accidents_view(self, severe_class, less_severe_class):
@@ -79,6 +83,7 @@ class DataVisualisation:
         ax2.set_xlabel('Severe Accidents', fontsize=12)
         ax1.set_ylabel('Number of Accidents', fontsize=12)
         ax2.set_ylabel('Number of Accidents', fontsize=12)
+        plt.savefig('Views/age.png')
         fig.show()
 
 data_visualisation_object = DataVisualisation("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
