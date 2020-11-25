@@ -22,7 +22,10 @@ class DataVisualisation:
         plt.show()
     
     def accident_year_serious_category(self, accidents_year_serious_category):
-        fig = sns.barplot(x = data.Year, y = data.Accident_Index, hue = data.Serious_Class, palette="plasma")
+        fig = sns.barplot(x = accidents_year_serious_category.Year, 
+                          y = accidents_year_serious_category.Accident_Index, 
+                          hue = accidents_year_serious_category.Serious_Class, 
+                          palette="plasma")
         plt.xlabel("Year", fontsize=15, fontweight="bold")
         plt.ylabel("Number of Accidents", fontsize=15, fontweight="bold")
         plt.savefig('Views/accident_year_serious_category.png')
