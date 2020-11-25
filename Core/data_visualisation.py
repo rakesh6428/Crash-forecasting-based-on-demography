@@ -20,7 +20,17 @@ class DataVisualisation:
         plt.ylabel("\nNumber of Accidents", fontsize=15, fontweight="bold")
         plt.savefig('Views/accidents.png')
         plt.show()
-
+    
+    def accident_year_serious_category(self, accidents_year_serious_category):
+        fig = sns.barplot(x = accidents_year_serious_category.Year, 
+                          y = accidents_year_serious_category.Accident_Index, 
+                          hue = accidents_year_serious_category.Serious_Class, 
+                          palette="plasma")
+        plt.xlabel("Year", fontsize=15, fontweight="bold")
+        plt.ylabel("Number of Accidents", fontsize=15, fontweight="bold")
+        plt.savefig('Views/accident_year_serious_category.png')
+        plt.show()
+        
     def speed_serious_view(self,severe_class,less_severe_class):
         interval = [20, 30, 40, 50, 60, 70]
         fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(15, 12))
@@ -97,6 +107,10 @@ data_visualisation_object.accident_year_view(accidents_year)
 # Split the data set into 2 groups - Severe and Less Severe Accidents
 severe_class = main_dataset[(main_dataset['Serious_Class'] == "Severe")]
 less_severe_class = main_dataset[(main_dataset['Serious_Class'] == "Less Severe")]
+
+# Visualise the data based on Year and Seriousness
+accidents_year_serious_category_data = main_dataset.groupby(['Year','Serious_Class']).count().reset_index()
+data_visualisation_object.accident_year_serious_category(accidents_year_serious_category_data)
 
 # Visualise the speed and severity correlation
 data_visualisation_object.speed_serious_view(severe_class,less_severe_class)
