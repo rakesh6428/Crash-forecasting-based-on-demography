@@ -64,32 +64,46 @@ class DataProcessor:
                                                                                     value="Severe")
         self.main_frame['Serious_Class'] = self.main_frame['Serious_Class'].replace(to_replace="Fatal",
                                                                                     value="Severe")
+        self.main_frame = self.main_frame.drop(['Accident_Severity'], axis=1)
         return self.main_frame
 
+    def remove_nan(self):
+        self.main_frame['Driver_Home_Area_Type'] = self.main_frame['Driver_Home_Area_Type'].replace(
+            ['Data missing or out of range'], 'Urban area')
+        self.main_frame = self.main_frame.fillna({"model": "UNKNOWN"})
+        self.main_frame = self.main_frame.fillna({"Propulsion_Code": "Petrol"})
+        self.main_frame = self.main_frame.fillna({"2nd_Road_Class": "A"})
+        self.main_frame = self.main_frame.fillna({"LSOA_of_Accident_Location": "UNKNOWN"})
+        self.main_frame = self.main_frame.fillna({"Time": "17:00"})
+        self.main_frame = self.main_frame.fillna({"make": "Ford"})
+        self.main_frame = self.main_frame.fillna({"InScotland": "No"})
+        return self.main_frame
 
-data_processor_object = DataProcessor(
-    "/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/Accident_Information.csv",
-    "/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/Vehicle_Information.csv")
+if __name__ == '__main__':
 
-accident_frame = data_processor_object.remove_junk_data("accident_dataset")
-vehicle_frame = data_processor_object.remove_junk_data("vehicle_dataset")
-main_frame = data_processor_object.merge_frames(accident_frame, vehicle_frame)
+    data_processor_object = DataProcessor(
+        "/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/Accident_Information.csv",
+        "/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/Vehicle_Information.csv")
 
-# Remove the clutter in the dataset.
-# data_processor_object.nullify_columns()
-main_frame = main_frame.drop(['Location_Easting_OSGR', 'Location_Northing_OSGR', '2nd_Road_Class'], axis=1)
-main_frame['Date'] = pd.to_datetime((main_frame['Date']), format="%Y-%m-%d")
-main_frame['model'].fillna(method='ffill', inplace=True)
-main_frame['LSOA_of_Accident_Location'].fillna(method='ffill', inplace=True)
-main_frame.dropna(inplace=True)
+    accident_frame = data_processor_object.remove_junk_data("accident_dataset")
+    vehicle_frame = data_processor_object.remove_junk_data("vehicle_dataset")
+    main_frame = data_processor_object.merge_frames(accident_frame, vehicle_frame)
 
-# Editing the features value
-main_frame['Date'] = pd.to_datetime(main_frame['Date'])
-main_frame = data_processor_object.create_accident_serious_column()
+    # Remove the clutter in the dataset.
+    # data_processor_object.nullify_columns()
+    main_frame = main_frame.drop(['Location_Easting_OSGR', 'Location_Northing_OSGR', '2nd_Road_Class'], axis=1)
+    main_frame['Date'] = pd.to_datetime((main_frame['Date']), format="%Y-%m-%d")
+    main_frame['model'].fillna(method='ffill', inplace=True)
+    main_frame['LSOA_of_Accident_Location'].fillna(method='ffill', inplace=True)
+    main_frame.dropna(inplace=True)
 
-main_frame.to_pickle("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
-main_frame = pd.read_pickle("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
-print(main_frame.head())
+    # Editing the features value
+    main_frame['Date'] = pd.to_datetime(main_frame['Date'])
+    main_frame = data_processor_object.create_accident_serious_column()
+    main_frame = data_processor_object.remove_nan()
+    main_frame.to_pickle("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
+    main_frame = pd.read_pickle("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
+    print(main_frame.head())
 
-print(main_frame.shape)
-print(main_frame.info())
+    print(main_frame.shape)
+    print(main_frame.info())

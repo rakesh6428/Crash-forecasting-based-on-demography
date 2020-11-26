@@ -86,29 +86,30 @@ class DataVisualisation:
         plt.savefig('Views/age.png')
         fig.show()
 
-data_visualisation_object = DataVisualisation("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
-main_dataset = data_visualisation_object.get_dataset()
+if __name__ == '__main__':
 
-accidents_year = main_dataset.groupby(['Year'])['Accident_Index'].count()
+    data_visualisation_object = DataVisualisation(
+        "/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
+    main_dataset = data_visualisation_object.get_dataset()
 
-# Visualise the accidents per year basis
-data_visualisation_object.accident_year_view(accidents_year)
+    accidents_year = main_dataset.groupby(['Year'])['Accident_Index'].count()
 
-# Split the data set into 2 groups - Severe and Less Severe Accidents
-severe_class = main_dataset[(main_dataset['Serious_Class'] == "Severe")]
-less_severe_class = main_dataset[(main_dataset['Serious_Class'] == "Less Severe")]
+    # Visualise the accidents per year basis
+    data_visualisation_object.accident_year_view(accidents_year)
 
-# Visualise the speed and severity correlation
-data_visualisation_object.speed_serious_view(severe_class,less_severe_class)
+    # Split the data set into 2 groups - Severe and Less Severe Accidents
+    severe_class = main_dataset[(main_dataset['Serious_Class'] == "Severe")]
+    less_severe_class = main_dataset[(main_dataset['Serious_Class'] == "Less Severe")]
 
-# Visualise effect of the Junction control
-data_visualisation_object.junction_accidents_view(severe_class,less_severe_class)
+    # Visualise the speed and severity correlation
+    data_visualisation_object.speed_serious_view(severe_class, less_severe_class)
 
-# Visualise demographics of the driver
-data_visualisation_object.driver_gender_accidents_view(severe_class,less_severe_class)
-data_visualisation_object.driver_age_accidents_view(severe_class,less_severe_class)
+    # Visualise effect of the Junction control
+    data_visualisation_object.junction_accidents_view(severe_class, less_severe_class)
 
-
+    # Visualise demographics of the driver
+    data_visualisation_object.driver_gender_accidents_view(severe_class, less_severe_class)
+    data_visualisation_object.driver_age_accidents_view(severe_class, less_severe_class)
 
 
 
