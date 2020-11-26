@@ -56,7 +56,8 @@ class DataProcessor:
     # def nullify_columns(self):
     #     self.main_frame['model'].fillna(method='ffill', inplace=True)
 
-    def create_accident_serious_column(self):
+    def create_accident_serious_column(self,main_frame):
+        self.main_frame = main_frame
         self.main_frame['Serious_Class'] = self.main_frame['Accident_Severity']
         self.main_frame['Serious_Class'] = self.main_frame['Serious_Class'].replace(to_replace="Slight",
                                                                                     value="Less Severe")
@@ -68,17 +69,26 @@ class DataProcessor:
         return self.main_frame
 
     def remove_nan(self):
+        self.main_frame.columns = self.main_frame.columns.str.replace('.', '')
+        self.main_frame.columns = self.main_frame.columns.str.replace('-', '')
         self.main_frame['Driver_Home_Area_Type'] = self.main_frame['Driver_Home_Area_Type'].replace(
             ['Data missing or out of range'], 'Urban area')
         self.main_frame = self.main_frame.fillna({"model": "UNKNOWN"})
         self.main_frame = self.main_frame.fillna({"Propulsion_Code": "Petrol"})
         self.main_frame = self.main_frame.fillna({"2nd_Road_Class": "A"})
+        self.main_frame = self.main_frame.fillna({"2nd_Road_Number": 0.0})
         self.main_frame = self.main_frame.fillna({"LSOA_of_Accident_Location": "UNKNOWN"})
         self.main_frame = self.main_frame.fillna({"Time": "17:00"})
         self.main_frame = self.main_frame.fillna({"make": "Ford"})
         self.main_frame = self.main_frame.fillna({"InScotland": "No"})
+        self.main_frame = self.main_frame.fillna({"Age_of_Vehicle": 1.0})
+        #print(self.main_frame[self.main_frame.isnull().any(axis=1)])
+        self.main_frame = self.main_frame.fillna({"Driver_IMD_Decile": 2.0})
+        self.main_frame.rename(columns={"Engine_Capacity_.CC.": "Engine_Capacity_CC"})
+        self.main_frame = self.main_frame.fillna({"Engine_Capacity_CC": 1242.0})
+        print(self.main_frame[self.main_frame.isnull().any(axis=1)])
         return self.main_frame
-
+        #self.main_frame[self.main_frame.isnull().any(axis=1)]
 if __name__ == '__main__':
 
     data_processor_object = DataProcessor(
@@ -99,11 +109,14 @@ if __name__ == '__main__':
 
     # Editing the features value
     main_frame['Date'] = pd.to_datetime(main_frame['Date'])
-    main_frame = data_processor_object.create_accident_serious_column()
+    main_frame = data_processor_object.create_accident_serious_column(main_frame)
     main_frame = data_processor_object.remove_nan()
     main_frame.to_pickle("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
     main_frame = pd.read_pickle("/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
-    print(main_frame.head())
 
-    print(main_frame.shape)
-    print(main_frame.info())
+
+
+    # print(main_frame.head())
+    #
+    # print(main_frame.shape)
+    # print(main_frame.info())
