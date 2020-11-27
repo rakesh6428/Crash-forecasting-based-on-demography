@@ -38,6 +38,7 @@ class DataEncoding:
         plt.title("Severity of Accidents", fontsize = 20)
         plt.xlabel("Severity",fontsize=15)
         plt.ylabel("Accidents Count", fontsize=15)
+        plt.savefig('Views/accident_severity_classes.png')
         plt.show()
 
     def undersample_dataset(self,X,y):

@@ -25,6 +25,7 @@ class UnsupervisedLearning:
                       order=cluster_prediction['Junction_Detail'].value_counts().index,
                       hue=cluster_prediction['Cluster_Predicted'], palette='plasma', ax=ax[2])
         plt.tight_layout()
+        plt.savefig('Views/clustered_plot.png')
         plt.show()
 
     def create_actual_data_plots(self,unencoded_dataset):
@@ -39,6 +40,7 @@ class UnsupervisedLearning:
                       order=unencoded_dataset['Junction_Detail'].value_counts().index,
                       hue=unencoded_dataset['Serious_Class'], palette='plasma', ax=ax[2])
         plt.tight_layout()
+        plt.savefig('Views/actual_plot.png')
         plt.show()
 
 
@@ -60,7 +62,7 @@ unsupervised_learning = UnsupervisedLearning()
 cluster_prediction=unsupervised_learning.create_cluster_data()
 
 unsupervised_learning.create_plots(cluster_prediction)
-unsupervised_learning.create_plots(cluster_prediction)
+unsupervised_learning.create_actual_data_plots(unencoded_dataset)
 
 
 
