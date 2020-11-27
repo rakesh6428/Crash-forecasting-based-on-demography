@@ -58,7 +58,7 @@ class DataEncoding:
         # Split the data
         X = encoded_dataset.drop(['Serious_Class'],axis=1)
         y = encoded_dataset['Serious_Class']
-        print(X[X.isnull().any(axis=1)])
+        #print(X[X.isnull().any(axis=1)])
         # Visualise the amount of Data in each classes ( Severe and Less Severe )
         self.visualise_data(temp_dataset)
 
@@ -67,15 +67,12 @@ class DataEncoding:
         sampled_dataset = self.undersample_dataset(X,y)
         sampled_X = sampled_dataset.drop(['Serious_Class'],axis=1)
         sampled_y = sampled_dataset['Serious_Class']
-        return sampled_X,sampled_y
+        return sampled_dataset,sampled_X,sampled_y
+
+
 
 # print(encoded_dataset.Serious_Class.value_counts())
-
-print("Nothing")
-
-
-
-
+# print("Nothing")
 #temp_dataset = data_encoding_object.main_dataset.select_dtypes(include = ['object']).copy()
 #print(temp_dataset[temp_dataset.isnull().any(axis=1)])
 #main_dataset = data_encoding_object.remove_nan()
