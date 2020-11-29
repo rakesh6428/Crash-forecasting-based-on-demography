@@ -40,8 +40,8 @@ class UnsupervisedLearning:
             y_pred = algorithm.predict(X_test)
             accuracy = metrics.accuracy_score(y_test, y_pred)
             print("\nAccuracy", accuracy)
-            cv_score = np.mean(cross_val_score(algorithm,X_train,y_train,cv=5))
-            print("Cross Validation Score",cv_score)
+            # cv_score = np.mean(cross_val_score(algorithm,X_train,y_train,cv=5))
+            # print("Cross Validation Score",cv_score)
             print("\nAccuracy Report:\n",classification_report(y_test, y_pred))
             confusion_matrix_values = confusion_matrix(y_test, y_pred)
 
