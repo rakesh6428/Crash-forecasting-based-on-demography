@@ -68,7 +68,7 @@ class DataEncoding:
         sampled_dataset = self.undersample_dataset(X,y)
         sampled_X = sampled_dataset.drop(['Serious_Class'],axis=1)
         sampled_y = sampled_dataset['Serious_Class']
-        return sampled_dataset,sampled_X,sampled_y
+        return sampled_dataset,sampled_X,sampled_y, X, y
 
 
 
