@@ -42,11 +42,11 @@ class DataEncoding:
         plt.show()
 
     def undersample_dataset(self,X,y):
-        X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.33, random_state=27)
+        X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25, random_state=27)
         train_data = pd.concat([X_train,y_train],axis=1)
         severe_data = train_data[train_data.Serious_Class == 1]
         less_severe_data = train_data[train_data.Serious_Class == 0]
-        undersample_less_severe = resample(less_severe_data,n_samples=len(severe_data), random_state=0)
+        undersample_less_severe = resample(less_severe_data,n_samples=len(severe_data), random_state=27, replace=True)
         undersampled_data=pd.concat([severe_data,undersample_less_severe])
         return undersampled_data
         #print(undersampled_data.Serious_Class.value_counts())

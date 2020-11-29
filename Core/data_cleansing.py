@@ -21,7 +21,7 @@ class DataProcessor:
         for chunk_data in dataset:
             if dataset_name == "accident_dataset":
                 usefuldata = chunk_data[(chunk_data['Carriageway_Hazards'] != out_of_range)
-                                        & (chunk_data['Year'] >= 2012)
+                                        & (chunk_data['Year'] >= 2007)
                                         & (chunk_data['Weather_Conditions'] != out_of_range)
                                         & (chunk_data['Road_Type'] != "Unknown")
                                         & (chunk_data['Road_Surface_Conditions'] != out_of_range)
@@ -36,7 +36,7 @@ class DataProcessor:
                                         & (chunk_data['Skidding_and_Overturning'] != out_of_range)
                                         & (chunk_data['Age_Band_of_Driver'] != out_of_range)
                                         & (chunk_data['Was_Vehicle_Left_Hand_Drive'] != out_of_range)
-                                        & (chunk_data.Year.astype(int) >= 2012)
+                                        & (chunk_data.Year.astype(int) >= 2007)
                                         & (chunk_data['Hit_Object_in_Carriageway'] != out_of_range)
                                         & (chunk_data['Sex_of_Driver'] != out_of_range)
                                         & (chunk_data.Year.astype(int) <= 2017)
