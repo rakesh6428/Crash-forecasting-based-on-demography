@@ -11,7 +11,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.decomposition import PCA
 
 
-class UnsupervisedLearning:
+class SupervisedLearning:
     def visualise_confusion_matrix(self, data, count):
         plt.figure(figsize=(10, 5))
         plt.clf()
@@ -60,7 +60,7 @@ class UnsupervisedLearning:
                                           columns=accuracy_table_cols)
             accuracy_comparison = accuracy_comparison.append(accuracy_table)
 
-            unsupervised_learning.visualise_confusion_matrix(confusion_matrix_values,count)
+            supervised_learning.visualise_confusion_matrix(confusion_matrix_values,count)
             count += 1
 
         return accuracy_comparison
@@ -85,7 +85,7 @@ class UnsupervisedLearning:
         plt.savefig('Views/Final Comparison.png')
         plt.show()
 
-unsupervised_learning = UnsupervisedLearning()
+supervised_learning = SupervisedLearning()
 data_encoding_object = DataEncoding(
     "/Volumes/SJSU/CS271 Topics in Machine Learning/Final project/Dataset/main_frame.pkl")
 main_dataset, X, y, encoded_X, encoded_y = data_encoding_object.fetch_encoded_sampled_Data()
@@ -102,7 +102,7 @@ machine_learning_algorithms = [
 
 accuracy_table_cols = ["Algorithm", "Accuracy", "Error", "FPR", "AUC", "Precision", "Recall", "Cross Validation Score"]
 accuracy_comparison = pd.DataFrame(columns=accuracy_table_cols)
-accuracy_comparison_ensemble = unsupervised_learning.compare_models(accuracy_comparison, accuracy_table_cols, X_train, y_train, machine_learning_algorithms)
+accuracy_comparison_ensemble = supervised_learning.compare_models(accuracy_comparison, accuracy_table_cols, X_train, y_train, machine_learning_algorithms)
 
 balanced_ensemble_algorithms = [
     BalancedRandomForestClassifier(n_estimators=500, sampling_strategy='majority', min_samples_split=10,
@@ -115,9 +115,9 @@ balanced_ensemble_algorithms = [
 ]
 
 
-accuracy_comparison_balanced = unsupervised_learning.compare_models(accuracy_comparison, accuracy_table_cols, X_train, y_train, balanced_ensemble_algorithms)
+accuracy_comparison_balanced = supervised_learning.compare_models(accuracy_comparison, accuracy_table_cols, X_train, y_train, balanced_ensemble_algorithms)
 accuracy_visualise = pd.concat([accuracy_comparison_ensemble,accuracy_comparison_balanced])
-unsupervised_learning.visualise_all_model_comparison(accuracy_visualise)
+supervised_learning.visualise_all_model_comparison(accuracy_visualise)
 
 #------- Perform PCA ---------
 pca = PCA()
